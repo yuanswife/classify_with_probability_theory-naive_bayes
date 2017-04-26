@@ -4,10 +4,9 @@
 朴素贝叶斯 朴素:是因为整个形式化过程只做最原始、最简单的假设
 朴素贝叶斯的两个假设: 特征之间相互独立、每个特征同等重要
 """
-'''使用python进行文本分类:  将文本转换为数字向量、基于这些向量来计算条件概率、在此基础上构建分类器'''
 import numpy as np
 
-
+'''使用python进行文本分类:  将文本转换为数字向量、基于这些向量来计算条件概率、在此基础上构建分类器'''
 # 准备数据:从文本中构建词向量
 # 词表到向量的转换函数:
 def load_dataset():
@@ -20,14 +19,12 @@ def load_dataset():
     classVec = [0, 1, 0, 1, 0, 1]       # 1 is abusive, 0 not
     return postingList, classVec
 
-
 # 创建一个包含在所有文档中出现的不重复词的列表:
 def create_vocabList(dataset):
     vocabSet = set([])                         # 创建一个空集
     for document in dataset:
         vocabSet = vocabSet | set(document)    # 创建两个集合的并集  注意:'|'只能用于set
     return list(vocabSet)
-
 
 # 获得词汇表后,便可以使用函数setOfWords2Vec()
 def setOfWords2Vec(vocabList, inputSet):    # 输入: 词汇表、某个文档
@@ -39,7 +36,6 @@ def setOfWords2Vec(vocabList, inputSet):    # 输入: 词汇表、某个文档
             print("the word: %s is not in my Vocabulary!" % word)
     return returnVec                        # 输出:文档向量,向量的每一元素为1或0,分别表示词汇表中的单词在输入文档中是否出现。
 
-
 """
 p(ci|w) = p(w|ci)p(ci) / p(w)
 p(ci) = 通过类别i中文档数 / 总的文档数
@@ -47,8 +43,6 @@ p(w|ci) 计算这个概率就要用到朴素贝叶斯假设。
         如果将w展开为一个个独立特征,那么就可以写作: p(w0,w1,w2..wN|ci)
         假设所有词都相互独立,该假设也称作条件独立性假设,意味着可以用  p(w0|ci)p(w1|ci)p(w2|ci)...p(wN|ci) 来计算
 """
-
-
 # 朴素贝叶斯分类器训练函数
 def train_NB0(trainMat, trainCategory):   # 输入:文档矩阵trainMatrix、由每篇文档类别标签所构成的向量trainCategory
     numTrainDocs = len(trainMat)
@@ -76,7 +70,6 @@ def train_NB0(trainMat, trainCategory):   # 输入:文档矩阵trainMatrix、由
     # p1Vect = np.log(p1Num / p1Denom)
     # p0Vect = np.log(p0Num / p0Denom)
     return p0Vect, p1Vect, pAbusive
-
 
 if __name__ == '__main__':
     listOPosts, listClasses = load_dataset()
